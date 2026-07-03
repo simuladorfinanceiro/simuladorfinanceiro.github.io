@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simuladores Financeiros</title>
+  <style>
+    body { 
+      font-family: Arial, sans-serif; 
+      margin: 0; 
+      background-color: #f5f7fa; 
+      text-align: center; 
+    }
+    .topbar {
+      width: 100%;
+      background-color: #2c3e50;
+      color: white;
+      padding: 12px 18px;
+      font-size: 1.6em;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between; /* mantém lado a lado */
+      align-items: center;
+      box-sizing: border-box;
+      flex-wrap: nowrap; /* impede quebra */
+    }
+    .topbar a {
+      font-size: 0.8em;
+      color: #f1c40f;
+      text-decoration: none;
+      font-weight: normal;
+      white-space: nowrap; /* impede quebra de linha */
+      background: none; /* remove a caixa azul */
+      padding: 0;       /* remove o espaçamento da caixa */
+      border-radius: 0; /* remove cantos arredondados */
+    }
+    .topbar a:hover {
+      text-decoration: underline;
+    }
+    .container { 
+      margin-top: 40px; 
+      max-width: 800px; 
+      margin-left: auto; 
+      margin-right: auto; 
+      background: white; 
+      padding: 25px; 
+      border-radius: 8px; 
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+    }
+    h1 { 
+      font-size: 1.9em; 
+      color: #2c3e50; 
+      margin-bottom: 20px; 
+    }
+    .texto-justificado { 
+      font-size: 1em; 
+      color: #555; 
+      line-height: 1.4em; 
+      text-align: justify; 
+      margin-bottom: 20px; 
+    }
+    .texto-centralizado { 
+      font-size: 1em; 
+      color: #555; 
+      line-height: 1.4em; 
+      text-align: center; 
+      margin-bottom: 30px; 
+    }
+    .links { 
+      display: flex; 
+      flex-direction: column; 
+      gap: 19px;
+	font-size: 1.2em; 
+    }
+    a, .novidades { 
+      display: block; 
+      padding: 7px; 
+      background-color: #3498db; 
+      color: white; 
+      text-decoration: none; 
+      border-radius: 6px; 
+      font-weight: bold; 
+      transition: background-color 0.3s; 
+      font-size: 0.9em; 
+    }
+    a:hover { 
+      background-color: #2980b9; 
+    }
+    .icon { 
+      margin-left: 6px; 
+      font-size: 0.9em; 
+    }
+    .apoio { 
+      margin-top: 30px; 
+      padding: 15px; 
+      background-color: #ecf0f1; 
+      border-radius: 8px; 
+      font-size: 0.85em; 
+      color: #2c3e50; 
+      text-align: center; 
+    }
+    .apoio strong { 
+      color: #27ae60; 
+    }
+
+    /* Media queries para mobile */
+    @media (max-width: 600px) {
+	 .links { font-size: 1em;    }
+	 .icon { font-size: 0.9em;    }
+      .topbar { font-size: 1.2em; }
+      .topbar a { font-size: 0.9em; }
+      h1 { font-size: 1.5em; }
+      .container { padding: 20px; }
+      a, .novidades { font-size: 1.0em; padding: 10px; }
+    }
+    @media (max-width: 400px) {
+      h1 { font-size: 1.3em; }
+	 .links { font-size: 1em;    }
+      .icon { font-size: 0.9em;    }
+      .topbar { font-size: 1em; }
+      .topbar a { font-size: 0.75em; }
+      a, .novidades { font-size: 0.9em; padding: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <span>📊 Simuladores Financeiros</span>
+    <a href="dicas-investimento.html" target="_blank"> <strong>💡  &nbsp;&nbsp;</strong> </a>
+  </div>
+  <div class="container">
+
+<!--    <h1>Planeje, invista e realize!🏆</h1> -->
+
+    <p class="texto-justificado">
+      Este portal reúne diferentes simuladores para te ajudar a planejar seus investimentos e entender melhor os impactos dos juros compostos, aportes mensais e inflação.
+    </p>
+<br>
+
+    <div class="links">
+      <a href="simulador-juros.html" target="_blank">
+        Simular INVESTIMENTOS 🚀
+<!--   <span class="icon">↗️</span> -->
+      </a>
+      <a href="simulador-renda.html" target="_blank">
+        Simular RENDA PASSIVA 💵
+<!--   <span class="icon">↗️</span> -->
+      </a>
+      <a href="simulador-compra.html" target="_blank">
+        Simular COMPRA PARCELADA & INVESTIMENTO
+<!--   <span class="icon">↗️</span> -->
+      </a>
+      <a href="comparar-juros.html" target="_blank">
+        O poder dos Juros Compostos 💪
+<!--   <span class="icon">↗️</span> -->
+      </a>
+   <br>
+ <!-- Caixa de novidades -->
+      <div class="novidades">
+        em breve, mais novidades...
+      </div>
+
+    </div>
+<br>
+<br>
+<br>
+    <div class="apoio">
+      <p>
+        Gostou do site e quer apoiar o desenvolvimento? <br>
+        Envie um PIX para a chave <strong>poupar.investir@hotmail.com</strong> <br> 
+	   Sua ajuda é bem-vinda! <br> <br> 
+	   Dúvidas ou sugestões? Envie-nos um e-mail.
+      </p>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comparador de Juros</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; background-color: #f5f7fa; display: flex; flex-direction: column; align-items: center; }
+    .topbar { width: 100%; background-color: #2c3e50; color: white; padding: 12px 18px; font-size: 1.6em; font-weight: bold; display: flex; justify-content: space-between; align-items: center; box-sizing: border-box; flex-wrap: nowrap; }
+    .topbar a { font-size: 0.8em; color: #f1c40f; text-decoration: none; font-weight: normal; white-space: nowrap; }
+    .topbar a:hover { text-decoration: underline; }
+    .container { margin-top: 30px; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: center; max-width: 700px; width: 90%; }
+    h1 { font-size: 2em; font-weight: bold; color: #2c3e50; margin-bottom: 20px; }
+    .intro { font-size: 1em; color: #555; margin-bottom: 30px; line-height: 1.4em; }
+    label { display: block; margin: 12px 0; font-weight: bold; text-align: left; padding-left: 15px; }
+    input, select { margin-left: 0px; padding: 5px; border: 1px solid #ccc; border-radius: 4px; width: auto; max-width: 200px; box-sizing: border-box; }
+    button { margin-top: 20px; padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 1em; }
+    button:hover { background-color: #2980b9; }
+    .resultados { margin-top: 30px; text-align: center; }
+    .linha { margin: 10px 0; padding: 10px; border-radius: 6px; font-weight: bold; }
+    .valor-futuro-composto { background-color: #27ae60; color: white; font-size: 1.2em; }
+    .valor-futuro-simples, .valor-parado { background-color: #bdc3c7; color: #2c3e50; font-size: 1.0em; }
+    #grafico { margin-top: 30px; max-height: 350px; max-width: 100%; height: auto; }
+    .apoio { margin-top: 40px; padding: 20px; background-color: #ecf0f1; border-radius: 8px; font-size: 0.9em; color: #2c3e50; text-align: center; }
+    .apoio strong { color: #27ae60; }
+    @media (max-width: 600px) { h1 { font-size: 1.5em; } .container { padding: 20px; } button { width: 100%; font-size: 1.1em; } input { width: 33%; max-width: none; } .topbar { font-size: 1.2em; } .topbar a { font-size: 0.9em; } }
+    @media (max-width: 400px) { input { width: 33%; min-width: 100px; margin-top: 8px;} label { text-align: left; } .topbar { font-size: 1em; } .topbar a { font-size: 0.75em; } }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <a href="index.html" style="color:white; text-decoration:none;"><strong>📊 Simuladores Financeiros</strong></a>
+    <a href="dicas-investimento.html" target="_blank"><strong> 💡  &nbsp;&nbsp; </strong></a>
+  </div>
+  <div class="container">
+    <h1> O potencial dos juros compostos!💪</h1>
+<br>
+
+    <p class="intro">
+<!--      Compare juros simples e juros compostos.  -->
+    </p>
+
+    <label>Valor: R$ <input id="valor" type="text" value="10.000,00"></label>
+    <label>Taxa de juros: 
+      <input id="taxa" type="number" step="0.01" value="12">
+      <select id="tipoJuros">
+        <option value="mensal">Mensal (%)</option>
+        <option value="anual" selected>Anual (%)</option>
+      </select>
+    </label>
+    <label>Tempo: 
+      <input id="tempo" type="number" value="30">
+      <select id="tipoTempo">
+        <option value="anos" selected>Anos</option>
+        <option value="meses">Meses</option>
+      </select>
+    </label>
+
+    <button onclick="comparar()">Conferir</button>
+
+    <div id="resultado"></div>
+    <canvas id="grafico"></canvas>
+
+    <div class="apoio">
+      <p>
+        Gostou do site e quer apoiar o desenvolvimento? <br>
+        Envie um PIX para a chave <strong>poupar.investir@hotmail.com</strong> <br> 
+        Sua ajuda é bem-vinda! <br><br> 
+        Dúvidas ou sugestões? Envie-nos um e-mail.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    let chart;
+
+    function aplicarMascaraMoeda(campo) {
+      campo.addEventListener("input", function(e) {
+        let valor = e.target.value.replace(/\D/g, "");
+        let numero = parseFloat(valor) / 100;
+        if (isNaN(numero)) { e.target.value = ""; return; }
+        e.target.value = numero.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      });
+    }
+
+    function parseValor(valorStr) {
+      if (!valorStr || valorStr.trim() === "") return 0;
+      valorStr = valorStr.replace(/\./g, "").replace(/,/g, ".");
+      let num = parseFloat(valorStr);
+      return isNaN(num) ? 0 : num;
+    }
+
+    function formatarValor(valor) {
+      return valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+    }
+
+    function comparar() {
+      let valor = parseValor(document.getElementById('valor').value);
+      let taxa = parseFloat(document.getElementById('taxa').value) / 100;
+      let tipoJuros = document.getElementById('tipoJuros').value;
+
+      let tempo = parseInt(document.getElementById('tempo').value);
+      if (isNaN(tempo)) tempo = 0;
+      let tipoTempo = document.getElementById('tipoTempo').value;
+      let anos = (tipoTempo === "meses") ? tempo / 12 : tempo;
+
+      if (isNaN(valor) || isNaN(taxa) || isNaN(anos)) {
+        alert("Preencha todos os campos corretamente.");
+        return;
+      }
+
+      let taxaAnual = (tipoJuros === "mensal") ? Math.pow(1 + taxa, 12) - 1 : taxa;
+
+      let simples = valor * (1 + taxaAnual * anos);
+      let composto = valor * Math.pow(1 + taxaAnual, anos);
+
+      document.getElementById('resultado').innerHTML = `
+        <div class="resultados">
+          <div class="linha valor-futuro-composto">📈 Juros Compostos: ${formatarValor(composto)}</div>
+          <div class="linha valor-futuro-simples">➖ Juros Simples: ${formatarValor(simples)}</div>
+          <div class="linha valor-parado">💤 Dinheiro "parado": ${formatarValor(valor)}</div>
+        </div>
+      `;
+
+      let labels = [], dadosSimples = [], dadosCompostos = [], dadosParado = [];
+
+      for (let i = 1; i <= anos; i++) {
+        labels.push("Ano " + i);
+        dadosSimples.push(valor * (1 + taxaAnual * i));
+        dadosCompostos.push(valor * Math.pow(1 + taxaAnual, i));
+        dadosParado.push(valor);
+      }
+
+    
+      if (chart) chart.destroy();
+
+      let ctx = document.getElementById('grafico').getContext('2d');
+      chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: 'Dinheiro parado',
+              data: dadosParado,
+              borderColor: '#7f8c8d',
+              backgroundColor: 'rgba(127, 140, 141, 0.2)',
+              fill: true,
+              tension: 0.2
+            },
+            {
+              label: 'Juros Simples',
+              data: dadosSimples,
+              borderColor: '#e67e22',
+              backgroundColor: 'rgba(230, 126, 34, 0.2)',
+              fill: true,
+              tension: 0.2
+            },
+            {
+              label: 'Juros Compostos',
+              data: dadosCompostos,
+              borderColor: '#3498db',
+              backgroundColor: 'rgba(52, 152, 219, 0.2)',
+              fill: true,
+              tension: 0.2
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { position: 'top' }
+          },
+          scales: {
+            y: { beginAtZero: false }
+          }
+        }
+      });
+    }
+  
+    window.onload = function() {
+      aplicarMascaraMoeda(document.getElementById("valor"));
+    };
+  </script>
+</body>
+</html>

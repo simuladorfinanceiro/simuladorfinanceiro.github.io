@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulação de Juros Compostos</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f5f7fa;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .topbar {
+      width: 100%;
+      background-color: #2c3e50;
+      color: white;
+      padding: 12px 18px;
+      font-size: 1.6em;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-sizing: border-box;
+      flex-wrap: nowrap;
+    }
+    .topbar a {
+      font-size: 0.8em;
+      color: #f1c40f;
+      text-decoration: none;
+      font-weight: normal;
+      white-space: nowrap;
+    }
+    .topbar a:hover {
+      text-decoration: underline;
+    }
+    .container {
+      margin-top: 30px;
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      text-align: center;
+      max-width: 700px;
+      width: 90%;
+    }
+    h1 {
+      font-size: 1.9em;
+      font-weight: bold;
+      color: #2c3e50;
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin: 12px 0;
+      font-weight: bold;
+      text-align: left;
+      padding-left: 15px;
+    }
+    input, select {
+      margin-left: 0px;
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      width: auto;
+      max-width: 200px;
+      box-sizing: border-box;
+    }
+    .explicacao {
+      font-size: 0.9em;
+      color: #7f8c8d;
+      margin-top: -5px;
+      margin-bottom: 15px;
+    }
+    .apoio { 
+      margin-top: 40px; 
+      padding: 20px; 
+      background-color: #ecf0f1; 
+      border-radius: 8px; 
+      font-size: 0.9em; 
+      color: #2c3e50; 
+      text-align: center; 
+    }
+    .apoio strong { 
+      color: #27ae60; 
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1em;
+    }
+    button:hover {
+      background-color: #2980b9;
+    }
+    table {
+      border-collapse: collapse;
+      margin: 20px auto;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+      font-size: 0.9em;
+    }
+    th {
+      background-color: #ecf0f1;
+    }
+    .resultados {
+      margin-top: 30px;
+      text-align: center;
+    }
+    .resultados .linha {
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 6px;
+      background-color: #ecf0f1;
+      font-weight: bold;
+    }
+    .resultados .linha.valor-futuro {
+      background-color: #27ae60;
+      color: white;
+      font-size: 1.2em;
+    }
+    #grafico {
+      margin-top: 30px;
+      max-height: 350px;
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* Media queries para mobile */
+    @media (max-width: 600px) {
+      h1 { font-size: 1.5em; }
+      .container { padding: 20px; }
+      button { width: 100%; font-size: 1.0em; }
+      input, select { width: 100%; max-width: none; margin-top: 8px; }
+      table, th, td { font-size: 0.8em; }
+      .topbar { font-size: 1.2em; }
+      .topbar a { font-size: 0.9em; }
+    }
+    @media (max-width: 400px) {
+      input, select { width: 100%; min-width: 100px; }
+      label { text-align: left; }
+      th, td { font-size: 0.75em; padding: 6px; }
+      .topbar { font-size: 1em; }
+      .topbar a { font-size: 0.75em; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <a href="index.html" style="color:white; text-decoration:none;"><strong>📊 Simuladores Financeiros</strong></a>
+    <a href="dicas-investimento.html" target="_blank"> <strong> 💡  &nbsp;&nbsp; </strong></a>
+  </div>
+  <div class="container">
+    <h1>Simular Investimentos 🚀</h1>
+    <br>
+
+    <label>Valor inicial: R$ <input id="valorInicial" type="text" value="5.000,00"></label>
+    <label>Valor do aporte mensal: R$ <input id="aporteMensal" type="text" value="200,00"></label>
+    <label>Taxa de juros (do investimento): 
+      <input id="taxaJuros" type="number" step="0.01" value="12">
+      <select id="tipoJuros">
+        <option value="mensal">Mensal (%)</option>
+        <option value="anual" selected>Anual (%)</option>
+      </select>
+    </label>
+    <label>Tempo: 
+      <input id="tempo" type="number" value="10">
+      <select id="tipoTempo">
+        <option value="anos" selected>Anos</option>
+        <option value="meses">Meses</option>
+      </select>
+    </label>
+
+    <label>Taxa de inflação (corrige o valor do aporte): 
+      <input id="taxaInflacao" type="number" step="0.01" value="5">
+      <select id="tipoInflacao">
+        <option value="mensal">Mensal (%)</option>
+        <option value="anual" selected>Anual (%)</option>
+      </select>
+    </label>
+    <div class="explicacao">Se preenchida, a Taxa de Inflação atualiza o valor do aporte a cada mês, tornando a <u>simulação mais real!</u></div>
+
+    <button onclick="calcular()">Calcular</button>
+
+    <div id="resultado"></div>
+    <canvas id="grafico"></canvas>
+    <div id="tabela"></div>
+
+    <div class="apoio">
+      <p>
+        Gostou do site e quer apoiar o desenvolvimento? <br>
+        Envie um PIX para a chave <strong>poupar.investir@hotmail.com</strong> <br> 
+        Sua ajuda é bem-vinda! <br> <br> 
+        Dúvidas ou sugestões? Envie-nos um e-mail.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    let chart;
+
+    function aplicarMascaraMoeda(campo) {
+      campo.addEventListener("input", function(e) {
+        let valor = e.target.value.replace(/\D/g, "");
+        let numero = parseFloat(valor) / 100;
+        if (isNaN(numero)) {
+          e.target.value = "";
+          return;
+        }
+        e.target.value = numero.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      });
+    }
+
+    function parseValor(valorStr) {
+      if (!valorStr || valorStr.trim() === "") return 0;
+      valorStr = valorStr.replace(/\./g, "");
+      valorStr = valorStr.replace(/,/g, ".");
+      let num = parseFloat(valorStr);
+      return isNaN(num) ? 0 : num;
+    }
+
+
+    function formatarValor(valor) {
+      return valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+    }
+
+    function calcular() {
+      let valorInicial = parseValor(document.getElementById('valorInicial').value);
+      let aporteMensal = parseValor(document.getElementById('aporteMensal').value);
+
+      let taxaJuros = parseFloat(document.getElementById('taxaJuros').value);
+      if (isNaN(taxaJuros)) taxaJuros = 0;
+      taxaJuros = taxaJuros / 100;
+      let tipoJuros = document.getElementById('tipoJuros').value;
+
+      let taxaInflacao = parseFloat(document.getElementById('taxaInflacao').value);
+      if (isNaN(taxaInflacao)) taxaInflacao = 0;
+      taxaInflacao = taxaInflacao / 100;
+      let tipoInflacao = document.getElementById('tipoInflacao').value;
+
+      let tempo = parseInt(document.getElementById('tempo').value);
+      if (isNaN(tempo)) tempo = 0;
+      let tipoTempo = document.getElementById('tipoTempo').value;
+      let meses = (tipoTempo === "anos") ? tempo * 12 : tempo;
+
+      let jurosMensal = (tipoJuros === "anual") ? Math.pow(1 + taxaJuros, 1/12) - 1 : taxaJuros;
+      let inflacaoMensal = (tipoInflacao === "anual") ? Math.pow(1 + taxaInflacao, 1/12) - 1 : taxaInflacao;
+
+      let saldo = valorInicial;
+      let ganhoTotal = 0;
+      let totalAportado = valorInicial;
+
+      let tabelaHTML = "<table><tr><th>Mês</th><th>Saldo Inicial</th><th>Aporte Mensal</th><th>Rendimento</th><th>Saldo Final</th></tr>";
+
+      let labels = [];
+      let dadosSaldo = [];
+
+      for (let i = 1; i <= meses; i++) {
+        let aporteCorrigido = aporteMensal * Math.pow(1 + inflacaoMensal, i-1);
+        let rendimento = saldo * jurosMensal;
+        ganhoTotal += rendimento;
+        saldo = saldo + rendimento + aporteCorrigido;
+        totalAportado += aporteCorrigido;
+
+        tabelaHTML += `<tr>
+          <td>${i}</td>
+          <td>${formatarValor(saldo - rendimento - aporteCorrigido)}</td>
+          <td>${formatarValor(aporteCorrigido)}</td>
+          <td>${formatarValor(rendimento)}</td>
+          <td>${formatarValor(saldo)}</td>
+        </tr>`;
+
+        labels.push("Mês " + i);
+        dadosSaldo.push(saldo);
+      }
+
+      tabelaHTML += "</table>";
+
+      document.getElementById('resultado').innerHTML = `
+        <div class="resultados">
+          <div class="linha valor-futuro">Valor Final: ${formatarValor(saldo)}</div>
+          <div class="linha">Total Aportado: ${formatarValor(totalAportado)}</div>
+          <div class="linha">Total em Juros: ${formatarValor(ganhoTotal)}</div>
+        </div>
+      `;
+      document.getElementById('tabela').innerHTML = tabelaHTML;
+
+      if (chart) {
+        chart.destroy();
+      }
+
+      let ctx = document.getElementById('grafico').getContext('2d');
+      chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Evolução do Saldo',
+            data: dadosSaldo,
+            borderColor: '#3498db',
+            backgroundColor: 'rgba(52, 152, 219, 0.2)',
+            fill: true,
+            tension: 0.2
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { position: 'top' }
+          },
+          scales: {
+            y: {
+              beginAtZero: false
+            }
+          }
+        }
+      });
+    }
+
+    // Ativa a máscara nos dois campos ao carregar a página
+    window.onload = function() {
+      aplicarMascaraMoeda(document.getElementById("valorInicial"));
+      aplicarMascaraMoeda(document.getElementById("aporteMensal"));
+    };
+  </script>
+</body>
+</html>
