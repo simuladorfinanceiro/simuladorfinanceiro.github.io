@@ -37,6 +37,10 @@
     .topbar a:hover {
       text-decoration: underline;
     }
+    .icons-right {
+      display: flex;
+      gap: 10px; /* espaço entre os ícones */
+    }
     .container { 
       margin-top: 20px; 
       max-width: 800px; 
@@ -115,7 +119,7 @@
     }
     @media (max-width: 400px) {
       h1 { font-size: 1.3em; }
-	 .links { font-size: 1em;    }
+      .links { font-size: 1em;    }
       .icon { font-size: 0.9em;    }
       .topbar { font-size: 1.2em; }
       .topbar a { font-size: 0.9em; }
@@ -126,11 +130,12 @@
 <body>
   <div class="topbar">
     <span>📊 Simuladores Financeiros</span>
-    <a href="dicas-investimento.html" target="_blank"> <strong>💡 &nbsp;</strong> </a>
+    <div class="icons-right">
+      <a href="dicas-investimento.html" target="_blank"><strong>💡</strong></a>
+      <a href="informações-investimento.html" target="_blank"><strong>ℹ️</strong></a>
+    </div>
   </div>
   <div class="container">
-
-<!--    <h1>Planeje, invista e realize!🏆</h1> -->
 
     <p class="texto-justificado">
       Este portal reúne diferentes simuladores para te ajudar a planejar seus investimentos e entender melhor os impactos dos juros compostos, aportes mensais e inflação.
@@ -139,16 +144,13 @@
 
     <div class="links">
       <a href="simulador-juros.html" target="_blank">
-        Simular INVESTIMENTO 🚀
-<!--   <span class="icon">↗️</span> -->
+        Simular INVESTIMENTOS 🚀
       </a>
       <a href="simulador-renda.html" target="_blank">
         Simular RENDA PASSIVA 💵
-<!--   <span class="icon">↗️</span> -->
       </a>
       <a href="simulador-compra.html" target="_blank">
         Comprar parcelado 💳 e investir 🪙
-<!--   <span class="icon">↗️</span> -->
       </a>
       <a href="comparar-juros.html" target="_blank">
         O poder dos Juros Compostos 📈
@@ -168,8 +170,8 @@
       <p>
         Gostou do site e quer apoiar o desenvolvimento? <br>
         Envie um PIX para a chave <strong>simuladorfinanceiro@hotmail.com</strong> <br> 
-	   Sua ajuda é bem-vinda! <br> <br> 
-	   Dúvidas ou sugestões? Envie-nos um e-mail. <br> <br>	   
+	Sua ajuda é bem-vinda! <br> <br> 
+	Dúvidas ou sugestões? Envie-nos um e-mail. <br> <br>	   
       </p>
     </div>
   </div>
