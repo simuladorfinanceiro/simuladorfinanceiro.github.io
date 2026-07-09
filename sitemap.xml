@@ -3,7 +3,7 @@
    
    <!-- 1. Página Principal -->
    <url>
-      <loc>https://github.io</loc>
+      <loc>https://simuladorfinanceiro.github.io/</loc>
       <lastmod>2026-07-08</lastmod>
       <changefreq>weekly</changefreq>
       <priority>1.0</priority>
@@ -11,7 +11,7 @@
 
    <!-- 2. Simulador de Juros -->
    <url>
-      <loc>https://github.iosimulador-juros.html</loc>
+      <loc>https://simuladorfinanceiro.github.io/simulador-juros.html</loc>
       <lastmod>2026-07-08</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.9</priority>
@@ -19,7 +19,7 @@
 
    <!-- 3. Simulador de Renda -->
    <url>
-      <loc>https://github.iosimulador-renda.html</loc>
+      <loc>https://simuladorfinanceiro.github.io/simulador-renda.html</loc>
       <lastmod>2026-07-08</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
@@ -27,34 +27,34 @@
 
    <!-- 4. Simulador de Compra -->
    <url>
-      <loc>https://github.iosimulador-compra.html</loc>
+      <loc>https://simuladorfinanceiro.github.io/simulador-compra.html</loc>
+      <lastmod>2026-07-08</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.8</priority>
+   </url>
+
+   <!-- 5. Comparar Juros -->
+   <url>
+      <loc>https://simuladorfinanceiro.github.io/comparar-juros.html</loc>
+      <lastmod>2026-07-08</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.8</priority>
+   </url>
+
+   <!-- 6. Dicas de Investimento -->
+   <url>
+      <loc>https://simuladorfinanceiro.github.io/dicas-investimento.html</loc>
       <lastmod>2026-07-08</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.7</priority>
    </url>
 
-   <!-- 5. Comparar Juros -->
-   <url>
-      <loc>https://github.iocomparar-juros.html</loc>
-      <lastmod>2026-07-08</lastmod>
-      <changefreq>weekly</changefreq>
-      <priority>0.6</priority>
-   </url>
-
-   <!-- 6. Dicas de Investimento -->
-   <url>
-      <loc>https://github.iodicas-investimento.html</loc>
-      <lastmod>2026-07-08</lastmod>
-      <changefreq>weekly</changefreq>
-      <priority>0.5</priority>
-   </url>
-
    <!-- 7. Informações de Investimento (URL codificada para evitar erros de acentuação) -->
    <url>
-      <loc>https://github.ioinforma%C3%A7%C3%B5es-investimento.html</loc>
+      <loc>https://simuladorfinanceiro.github.io/informa%C3%A7%C3%B5es-investimento.html</loc>
       <lastmod>2026-07-08</lastmod>
       <changefreq>weekly</changefreq>
-      <priority>0.4</priority>
+      <priority>0.7</priority>
    </url>
 
 </urlset>
