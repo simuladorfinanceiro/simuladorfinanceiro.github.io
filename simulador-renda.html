@@ -85,21 +85,21 @@
     <br>
 
     <label>Valor acumulado (investido): R$ <input id="valorInicial" type="text" value="1.000.000,00"></label>
-    <label>Valor do saque mensal: R$ <input id="saqueMensal" type="text" value="4.000,00"></label>
-
-    <label>Taxa de juros (do investimento): 
-      <input id="taxaJuros" type="number" step="0.01" value="10">
-      <select id="tipoJuros">
-        <option value="mensal">Mensal (%)</option>
-        <option value="anual" selected>Anual (%)</option>
-      </select>
-    </label>
+    <label>Valor do saque mensal: R$ <input id="saqueMensal" type="text" value="4.500,00"></label>
 
     <label>Tempo de saque: 
       <input id="tempo" type="number" value="20">
       <select id="tipoTempo">
         <option value="anos" selected>Anos</option>
         <option value="meses">Meses</option>
+      </select>
+    </label>
+
+    <label>Taxa de juros (do investimento): 
+      <input id="taxaJuros" type="number" step="0.01" value="11">
+      <select id="tipoJuros">
+        <option value="mensal">Mensal (%)</option>
+        <option value="anual" selected>Anual (%)</option>
       </select>
     </label>
 
@@ -111,7 +111,7 @@
       </select>
     </label>
 
-    <div class="explicacao">Se preenchida, a Taxa de Inflação atualiza o valor do saque a cada mês, tornando a <u>simulação mais real!</u></div>
+    <div class="explicacao">Se preenchida, a <strong>Taxa de Inflação</strong> atualiza o valor do saque a cada mês, tornando a <strong>simulação mais real!</strong></div>
 
     <button onclick="calcular()">Calcular</button>
 
@@ -124,9 +124,9 @@
  
     <div class="apoio">
       <p>
-        Site rápido e sem propagandas.<br>
-	Gostou e quer apoiar o desenvolvimento? <br> 
-	Essa é a nossa chave PIX: <strong>simuladorfinanceiro@hotmail.com</strong> <br> 
+        Site rápido, útil e sem propagandas.<br>
+	Gostou? Apoie nosso desenvolvimento: <br> 
+	Chave PIX: <strong>simuladorfinanceiro@hotmail.com</strong> <br> 
 	Sua ajuda é bem-vinda! <br> <br> 
 	Dúvidas ou sugestões? Envie-nos um e-mail.
       </p>
