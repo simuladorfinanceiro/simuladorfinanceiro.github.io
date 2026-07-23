@@ -59,13 +59,14 @@
         <option value="anual" selected>Anual (%)</option>
       </select>
     </label>
-    <label>Tempo: 
-      <input id="tempo" type="number" value="30">
-      <select id="tipoTempo">
-        <option value="anos" selected>Anos</option>
-        <option value="meses">Meses</option>
-      </select>
-    </label>
+ <label>Tempo: 
+  <input id="tempo" type="number" value="30">
+  <select id="tipoTempo">
+    <option value="anos" selected>Anos</option>
+    <option value="meses">Meses</option>
+    <option value="dias">Dias</option>
+  </select>
+</label>
 
     <button onclick="comparar()">Conferir</button>
 
@@ -113,8 +114,17 @@
 
       let tempo = parseInt(document.getElementById('tempo').value);
       if (isNaN(tempo)) tempo = 0;
-      let tipoTempo = document.getElementById('tipoTempo').value;
-      let anos = (tipoTempo === "meses") ? tempo / 12 : tempo;
+let tipoTempo = document.getElementById('tipoTempo').value;
+let anos;
+
+if (tipoTempo === "meses") {
+  anos = tempo / 12;
+} else if (tipoTempo === "dias") {
+  anos = tempo / 365; // aproximação: 1 ano = 365 dias
+} else {
+  anos = tempo;
+}
+
 
       if (isNaN(valor) || isNaN(taxa) || isNaN(anos)) {
         alert("Preencha todos os campos corretamente.");
