@@ -300,6 +300,13 @@
           }
         }
       });
+
+      // rola suavemente até o resultado com margem extra
+      const resultado = document.getElementById("resultado");
+      const yOffset = -80; // margem extra (80px acima)
+      const y = resultado.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: "smooth" });
+
     }
 
     window.onload = function() {
